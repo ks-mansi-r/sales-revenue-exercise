@@ -1,3 +1,4 @@
+
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Customer } from 'src/customer/customer.entity';
@@ -14,49 +15,60 @@ export class SeedService {
   async seed() {
     console.log('Seeding started...');
     
-    await this.seedCustomers();
-    await this.seedCategories();
-    await this.seedProducts();
+    // await this.seedCustomers();
+    // await this.seedCategories();
+    // await this.seedProducts();
     await this.seedOrders();
 
     console.log('Seeding completed.');
   }
 
-  private async seedCustomers() {
-    const customers: Partial<Customer>[] = [];
-    for (let i = 0; i < 5000; i++) {
-      customers.push({
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        createdAt: faker.date.past(),
-      });
-    }
-    await this.dataSource.getRepository(Customer).save(customers);
-    console.log('Seeded 5000 Customers');
-  }
+  // private async seedCustomers() {
+  //   const customers: Partial<Customer>[] = [];
+  //   for (let i = 0; i < 5000; i++) {
+  //     customers.push({
+  //       name: faker.person.fullName(),
+  //       email: faker.internet.email(),
+  //       createdAt: faker.date.past(),
+  //     });
+  //   }
+  //   await this.dataSource.getRepository(Customer).save(customers);
+  //   console.log('Seeded 5000 Customers');
+  // }
 
-  private async seedCategories() {
-    const categories: Partial<Category>[] = [];
-    for (let i = 0; i < 100; i++) {
-      categories.push({ name: faker.commerce.department() });
-    }
-    await this.dataSource.getRepository(Category).save(categories);
-    console.log('Seeded 100 Categories');
-  }
+  // private async seedCategories() {
+  //   const categoryRepository = this.dataSource.getRepository(Category);
+  //   const existingCategories = await categoryRepository.count();
+  
+  //   if (existingCategories > 0) {
+  //     console.log('Categories already exist. Skipping seeding.');
+  //     return;
+  //   }
+  
+  //   const categories: Partial<Category>[] = [];
+  //   for (let i = 0; i < 100; i++) {
+  //     categories.push({ Name: faker.commerce.department() });
+  //   }
+  
+  //   await categoryRepository.save(categories);
+  //   console.log('Seeded 100 Categories');
+  // }
+  
 
-  private async seedProducts() {
-    const categories = await this.dataSource.getRepository(Category).find();
-    const products: Partial<Product>[] = [];
-    for (let i = 0; i < 1000; i++) {
-      products.push({
-        name: faker.commerce.productName(),
-        price: parseFloat(faker.commerce.price()),
-        category: categories[Math.floor(Math.random() * categories.length)],
-      });
-    }
-    await this.dataSource.getRepository(Product).save(products);
-    console.log('Seeded 1000 Products');
-  }
+
+  // private async seedProducts() {
+  //   const categories = await this.dataSource.getRepository(Category).find();
+  //   const products: Partial<Product>[] = [];
+  //   for (let i = 0; i < 1000; i++) {
+  //     products.push({
+  //       name: faker.commerce.productName(),
+  //       price: parseFloat(faker.commerce.price()),
+  //       category: categories[Math.floor(Math.random() * categories.length)],
+  //     });
+  //   }
+  //   await this.dataSource.getRepository(Product).save(products);
+  //   console.log('Seeded 1000 Products');
+  // }
 
   private async seedOrders() {
     const customers = await this.dataSource.getRepository(Customer).find();
@@ -114,4 +126,6 @@ export class SeedService {
     console.log('Seeded 400,000 Orders');
   }
   
+
+
 }

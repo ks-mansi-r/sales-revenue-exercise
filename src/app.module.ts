@@ -13,6 +13,7 @@ import { OrderItem } from './orderitem/orderitem.entity';
 import { Category } from './category/category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeedModule } from './seed/seed.module';
+
 @Module({
   imports: [CustomerModule, ProductModule, OrderModule, CategoryModule, OrderitemModule,
 
@@ -23,9 +24,11 @@ import { SeedModule } from './seed/seed.module';
       username: 'user',
       password: 'password',
       database: 'sales-revenue-2',
-      entities: [Customer, Order, OrderItem,Product, Category],
+      entities: [Customer,Category, Order, OrderItem,Product],
       synchronize: true,
       autoLoadEntities: true,
+      // logging:true
+      
       
     }),
 
