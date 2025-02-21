@@ -23,4 +23,7 @@ export class OrderService {
     return this.orderRepository.getDailyOrderFromLast7Days();
   }
   
+  public async getAvgOrderValueCustomer(){
+    return this.orderRepository.getAvgOrderValueCustomer();
+  }
 }

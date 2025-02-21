@@ -64,5 +64,19 @@ export class OrderRepository extends Repository<Order> {
             .getRawMany();
     }
 
+    public async getAvgOrderValueCustomer(){
+        return this.createQueryBuilder('order')
+        .select('customer.id', 'customer_id')
+        .addSelect('customer.name', 'customer_name')
+        .addSelect('AVG(order.totalAmount)', 'avg_order_value')
+        .innerJoin('order.customer', 'customer')
+        .where('order.status = :status', { status: 'completed' })
+        .groupBy('customer.id, customer.name')
+        .having('COUNT(order.id) >= 2')
+        .orderBy('avg_order_value', 'DESC')
+        .getRawMany();
+        }
+
+    
 
 }

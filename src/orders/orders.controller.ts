@@ -28,4 +28,9 @@ export class OrderController {
 
     return this. orderService.getDailyOrderFromLast7Days();
   }
+
+  @Get('avg-order-customer')
+  async getAvgOrderValueCustomer(){
+    return this.orderService.getAvgOrderValueCustomer();
+  }
 }
