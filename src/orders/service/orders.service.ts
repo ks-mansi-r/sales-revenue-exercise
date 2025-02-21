@@ -10,5 +10,9 @@ export class OrderService {
     return this.orderRepository.getTotalRevenueByMonth();
   }
 
+
+  getTop5CustomersBySpending(){
+    return this.orderRepository.getTop5CustomersBySpending();
+  }
   
 }

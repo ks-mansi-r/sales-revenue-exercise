@@ -21,6 +21,19 @@ export class OrderRepository extends Repository<Order> {
             .getRawMany();
     }
 
+    async getTop5CustomersBySpending() {
+        return this.createQueryBuilder('order')
+          .select('customer.id', 'customer_id')
+          .addSelect('customer.name', 'customer_name')
+          .addSelect('SUM(order.totalAmount)', 'total_spent')
+          .innerJoin('order.customer', 'customer')
+          .where('order.status = :status', { status: 'completed' })
+          .groupBy('customer.id, customer.name')
+          .orderBy('total_spent', 'DESC')
+          .limit(5)
+          .getRawMany();
+      }
 
+      async 
 
 }

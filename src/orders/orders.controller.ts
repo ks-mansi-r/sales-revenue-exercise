@@ -10,4 +10,9 @@ export class OrderController {
     return this.orderService.getTotalRevenueByMonth();
   }
 
+  @Get('top-5-customers')
+  getTop5CustomersBySpending() {
+    return this.orderService.getTop5CustomersBySpending();
+  }
+
 }
