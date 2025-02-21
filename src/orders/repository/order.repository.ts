@@ -11,7 +11,7 @@ export class OrderRepository extends Repository<Order> {
 
     //Get Total Revenue by Month (Current Year)
 
-    async getTotalRevenueByMonth() {
+    public async getTotalRevenueByMonth() {
         return this.createQueryBuilder('order')
             .select(`TO_CHAR(order.createdAt, 'YYYY-MM') AS month`)
             .addSelect('SUM(order.totalAmount)', 'total_revenue')
@@ -21,7 +21,8 @@ export class OrderRepository extends Repository<Order> {
             .getRawMany();
     }
 
-    async getTop5CustomersBySpending() {
+    //Get top 5 customers spending as completed
+    public async getTop5CustomersBySpending() {
         return this.createQueryBuilder('order')
           .select('customer.id', 'customer_id')
           .addSelect('customer.name', 'customer_name')
@@ -34,6 +35,21 @@ export class OrderRepository extends Repository<Order> {
           .getRawMany();
       }
 
-      async 
+     public  async getSalesAndRevenuePerCategory() {
+        return this.dataSource
+          .createQueryBuilder()
+          .select('category.id', 'category_id')
+          .addSelect('category.name', 'category_name')
+          .addSelect('COUNT(order_item.id)', 'total_products_sold')
+          .addSelect('SUM(order_item.price)', 'total_revenue')
+          .from('order_items', 'order_item')
+          .innerJoin('products', 'product', 'order_item.productId = product.id')
+          .innerJoin('categories', 'category', 'product.categoryId = category.id')
+          .groupBy('category.id, category.name')
+          .orderBy('total_revenue', 'DESC')
+          .getRawMany();
+      }
+
+      
 
 }

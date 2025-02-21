@@ -14,5 +14,9 @@ export class OrderService {
   getTop5CustomersBySpending(){
     return this.orderRepository.getTop5CustomersBySpending();
   }
+
+  getSalesAndRevenuePerCategory(){
+    return this.orderRepository.getSalesAndRevenuePerCategory();
+  }
   
 }

@@ -15,4 +15,10 @@ export class OrderController {
     return this.orderService.getTop5CustomersBySpending();
   }
 
+
+  @Get('sales-revenue-product')
+  getSalesCountAndRevenuePerCategory() {
+    return this.orderService.getSalesAndRevenuePerCategory();
+  }
+
 }
