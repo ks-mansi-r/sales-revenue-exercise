@@ -24,32 +24,45 @@ export class OrderRepository extends Repository<Order> {
     //Get top 5 customers spending as completed
     public async getTop5CustomersBySpending() {
         return this.createQueryBuilder('order')
-          .select('customer.id', 'customer_id')
-          .addSelect('customer.name', 'customer_name')
-          .addSelect('SUM(order.totalAmount)', 'total_spent')
-          .innerJoin('order.customer', 'customer')
-          .where('order.status = :status', { status: 'completed' })
-          .groupBy('customer.id, customer.name')
-          .orderBy('total_spent', 'DESC')
-          .limit(5)
-          .getRawMany();
-      }
+            .select('customer.id', 'customer_id')
+            .addSelect('customer.name', 'customer_name')
+            .addSelect('SUM(order.totalAmount)', 'total_spent')
+            .innerJoin('order.customer', 'customer')
+            .where('order.status = :status', { status: 'completed' })
+            .groupBy('customer.id, customer.name')
+            .orderBy('total_spent', 'DESC')
+            .limit(5)
+            .getRawMany();
+    }
 
-     public  async getSalesAndRevenuePerCategory() {
+    // Get sales & revenue per product& category
+    public async getSalesAndRevenuePerCategory() {
         return this.dataSource
-          .createQueryBuilder()
-          .select('category.id', 'category_id')
-          .addSelect('category.name', 'category_name')
-          .addSelect('COUNT(order_item.id)', 'total_products_sold')
-          .addSelect('SUM(order_item.price)', 'total_revenue')
-          .from('order_items', 'order_item')
-          .innerJoin('products', 'product', 'order_item.productId = product.id')
-          .innerJoin('categories', 'category', 'product.categoryId = category.id')
-          .groupBy('category.id, category.name')
-          .orderBy('total_revenue', 'DESC')
-          .getRawMany();
-      }
+            .createQueryBuilder()
+            .select('category.id', 'category_id')
+            .addSelect('category.name', 'category_name')
+            .addSelect('COUNT(order_item.id)', 'total_products_sold')
+            .addSelect('SUM(order_item.price)', 'total_revenue')
+            .from('order_items', 'order_item')
+            .innerJoin('products', 'product', 'order_item.productId = product.id')
+            .innerJoin('categories', 'category', 'product.categoryId = category.id')
+            .groupBy('category.id, category.name')
+            .orderBy('total_revenue', 'DESC')
+            .getRawMany();
+    }
 
-      
+
+    //Get daily order count last 7 days 
+    public async getDailyOrderFromLast7Days() {
+        return this.createQueryBuilder('order')
+            .select('COUNT(order.id)', 'order_count')
+            .addSelect(`TO_CHAR(order.createdAt, 'YYYY-MM-DD') AS order_date`)
+            .addSelect('COUNT(order.id)', 'order_count')
+            .where('order.createdAt >= CURRENT_DATE - INTERVAL \'7 days\'')
+            .groupBy('order_date')
+            .orderBy('order_date', 'ASC')
+            .getRawMany();
+    }
+
 
 }

@@ -21,4 +21,11 @@ export class OrderController {
     return this.orderService.getSalesAndRevenuePerCategory();
   }
 
+
+  //get  daily order from last 7 days
+  @Get('daily-order-last-7days')
+  async getDailyOrderFRomLast7Days(){
+
+    return this. orderService.getDailyOrderFromLast7Days();
+  }
 }

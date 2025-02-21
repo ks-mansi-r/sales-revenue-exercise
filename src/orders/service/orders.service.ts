@@ -6,17 +6,21 @@ import { OrderRepository } from '../repository/order.repository';
 export class OrderService {
   constructor(private readonly orderRepository: OrderRepository) {}
 
-  getTotalRevenueByMonth() {
+  public async getTotalRevenueByMonth() {
     return this.orderRepository.getTotalRevenueByMonth();
   }
 
 
-  getTop5CustomersBySpending(){
+  public async getTop5CustomersBySpending(){
     return this.orderRepository.getTop5CustomersBySpending();
   }
 
-  getSalesAndRevenuePerCategory(){
+  public async getSalesAndRevenuePerCategory(){
     return this.orderRepository.getSalesAndRevenuePerCategory();
+  }
+
+  public async getDailyOrderFromLast7Days(){
+    return this.orderRepository.getDailyOrderFromLast7Days();
   }
   
 }
