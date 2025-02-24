@@ -77,6 +77,17 @@ export class OrderRepository extends Repository<Order> {
         .getRawMany();
         }
 
+        // get monthly sales trend for the last 6 months
+     public  async getMonthlySalesTrendLast6Months() {
+            return this.createQueryBuilder('order')
+              .select(`TO_CHAR(order.createdAt, 'YYYY-MM') AS month`)
+              .addSelect('SUM(order.totalAmount)', 'total_revenue')
+              .where('order.createdAt >= CURRENT_DATE - INTERVAL \'6 months\'')
+              .groupBy('month')
+              .orderBy('month', 'ASC')
+              .getRawMany();
+          }
+
     
 
 }

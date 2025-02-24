@@ -26,4 +26,8 @@ export class OrderService {
   public async getAvgOrderValueCustomer(){
     return this.orderRepository.getAvgOrderValueCustomer();
   }
+
+  public async getMonthlySalesTrendLast6Months(){
+    return this.orderRepository.getMonthlySalesTrendLast6Months();
+  }
 }

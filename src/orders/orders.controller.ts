@@ -33,4 +33,11 @@ export class OrderController {
   async getAvgOrderValueCustomer(){
     return this.orderService.getAvgOrderValueCustomer();
   }
+
+  // get last  6 months sales -trend
+  @Get('monthly-sales-trend')
+  async getMonthlySalesTrendLast6Months(){
+
+    return this.orderService.getMonthlySalesTrendLast6Months();
+  }
 }
