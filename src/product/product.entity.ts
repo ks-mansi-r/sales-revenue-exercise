@@ -10,12 +10,13 @@ export class Product {
   @Column({ length: 100 })
   name: string;
 
-  @ManyToOne(() => Category, (category) => category.products, { onDelete: 'CASCADE' })
-  category: Category;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
   orderItems: OrderItem[];
+  
+  @ManyToOne(() => Category, (category) => category.products)
+  category: Category;
 }

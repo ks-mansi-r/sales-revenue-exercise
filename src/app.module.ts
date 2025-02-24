@@ -12,7 +12,10 @@ import { Order } from './order/order.entity';
 import { OrderItem } from './orderitem/orderitem.entity';
 import { Category } from './category/category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SeedModule } from './seed/seed.module';
+// import { SeedModule } from './seed/seed.module';
+import { OrdersModule } from './orders/orders.module';
+
+
 
 @Module({
   imports: [CustomerModule, ProductModule, OrderModule, CategoryModule, OrderitemModule,
@@ -32,9 +35,13 @@ import { SeedModule } from './seed/seed.module';
       
     }),
 
-    SeedModule,
+    // SeedModule,
+
+    OrdersModule,
+
+
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,],
 })
 export class AppModule {}
